@@ -1,9 +1,7 @@
 <script lang="ts">
-  let template = `INSERT INTO Customers (CustomerName, Country)
-VALUES ('??name??', '??country??');`;
+  import { stringerStore } from "../code/stores";
 
-  let prefix = "??";
-  let suffix = "??";
+  $: ({ template, prefix, suffix, entries } = $stringerStore);
 
   const escape = (input: string) =>
     input
@@ -18,8 +16,6 @@ VALUES ('??name??', '??country??');`;
   $: regex = `(?<=${escape(prefix)})(\\w+)(?=${escape(suffix)})`;
 
   $: entryKeys = template.match(new RegExp(regex, "g")) ?? [];
-
-  let entries: Record<string, string> = { name: "John\nIgor", country: "USA\nUkraine" };
 
   let result = [];
   $: {
@@ -44,13 +40,13 @@ VALUES ('??name??', '??country??');`;
 <div id="stringer" class="h-screen font-mono text-sm">
   <div class="bg-slate-300 h-1/3 flex flex-col p-4 resize-y overflow-auto">
     <h3 class="font-bold text-lg mb-2">Template</h3>
-    <textarea id="template" class="grow p-4 resize-none" bind:value={template} />
+    <textarea id="template" class="grow p-4 resize-none" bind:value={$stringerStore.template} />
     <div class="flex gap-6 mt-4">
       <div class="grow flex gap-4">
-        <label for="prefix" class="p-1">Prefix:</label><input id="prefix" bind:value={prefix} class="grow p-1" />
+        <label for="prefix" class="p-1">Prefix:</label><input id="prefix" bind:value={$stringerStore.prefix} class="grow p-1" />
       </div>
       <div class="grow flex gap-4">
-        <label for="suffix" class="p-1">Suffix:</label><input id="suffix" bind:value={suffix} class="grow p-1" />
+        <label for="suffix" class="p-1">Suffix:</label><input id="suffix" bind:value={$stringerStore.suffix} class="grow p-1" />
       </div>
     </div>
   </div>
@@ -64,7 +60,7 @@ VALUES ('??name??', '??country??');`;
     {#each entryKeys as key}
       <div class="grow flex flex-col">
         <h3 class="font-bold">{key}</h3>
-        <textarea class="w-full grow p-2 resize-none" bind:value={entries[key]} />
+        <textarea class="w-full grow p-2 resize-none" bind:value={$stringerStore.entries[key]} />
       </div>
     {/each}
   </div>
