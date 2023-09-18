@@ -23,6 +23,7 @@ VALUES ('??name??', '??country??');`;
 
   let result = [];
   $: {
+    // Reset result to clear old values, dont remove this
     result = [];
 
     const resultCount = Math.max(
