@@ -1,23 +1,24 @@
 <script lang="ts">
   import { stringerStore, defaultStringer } from "../code/stores";
 
-  $: ({ template, prefix, suffix, entries } = $stringerStore);
+  $: prefix = $stringerStore.prefix;
+  $: suffix = $stringerStore.suffix;
+  $: entries = $stringerStore.entries;
+  $: template = $stringerStore.template;
 
-  const escape = (input: string) =>
-    input
-      .split("")
-      .map((char) => `\\${char}`)
-      .join("");
+  function regexEscape(str: string) {
+    return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
 
-  const keyedRegex = (key: string) => new RegExp(`${escape(prefix)}${key}${escape(suffix)}`, "g");
+  const keyedRegex = (key: string) => new RegExp(`${regexEscape(prefix)}${key}${regexEscape(suffix)}`, "g");
 
-  const keyedEntry = (key: string) => entries[key].split("\n");
+  const keyedEntry = (key: string) => (entries[key] ? entries[key].split("\n") : []);
 
-  $: regex = `(?<=${escape(prefix)})(\\w+)(?=${escape(suffix)})`;
+  $: regex = `(?<=${regexEscape(prefix)})(\\w+)(?=${regexEscape(suffix)})`;
 
   $: entryKeys = template.match(new RegExp(regex, "g")) ?? [];
 
-  let result = [];
+  let result: string[] = [];
   $: {
     // Reset result to clear old values, dont remove this
     result = [];
