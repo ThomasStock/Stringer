@@ -1,1 +1,1 @@
-Create SQL insert commands etc
+Little tool to create SQL insert commands etc
