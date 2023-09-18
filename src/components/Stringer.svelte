@@ -24,6 +24,7 @@ VALUES ('??name??', '??country??');`;
   let result = [];
   $: {
     result = [];
+
     const resultCount = Math.max(
       ...entryKeys.map((key) => {
         return keyedEntry(key).length;
@@ -62,12 +63,17 @@ VALUES ('??name??', '??country??');`;
     {#each entryKeys as key}
       <div class="grow flex flex-col">
         <h3 class="font-bold">{key}</h3>
-        <textarea class="w-full grow p-2" bind:value={entries[key]} />
+        <textarea class="w-full grow p-2 resize-none" bind:value={entries[key]} />
       </div>
     {/each}
   </div>
-  <div id="output" class="w-full bg-slate-400 resize-y overflow-auto h-1/3 flex flex-col p-4">
+  <div id="output" class="bg-slate-400 resize-y overflow-auto h-1/3 flex flex-col p-4 pb-2">
     <h3 class="font-bold text-lg mb-2">Result</h3>
     <textarea id="template" class="grow p-4 resize-none" bind:value={resultString} />
+    <div class="pt-2">
+      Source code @ <a target="_blank" href="https://github.com/ThomasStock/Stringer/blob/main/src/components/Stringer.svelte"
+        >https://github.com/ThomasStock/Stringer</a
+      >
+    </div>
   </div>
 </div>

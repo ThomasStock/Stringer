@@ -1,1 +1,3 @@
-Little tool to create SQL insert commands etc
+Little tool to bulk create SQL insert commands etc
+
+https://stringer.stackhouse.be/
