@@ -1,6 +1,4 @@
 <script lang="ts">
-  $: console.log("foo!!");
-
   let template = `INSERT INTO Customers (CustomerName, Country)
 VALUES ('??name??', '??country??');`;
 
@@ -39,7 +37,6 @@ VALUES ('??name??', '??country??');`;
     }
   }
   $: resultString = result.join("\n\n");
-  $: console.log(entryKeys);
 </script>
 
 <div id="stringer" class="h-screen font-mono text-sm">
