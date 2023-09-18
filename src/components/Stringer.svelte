@@ -1,10 +1,7 @@
 <script lang="ts">
   import { stringerStore, defaultStringer } from "../code/stores";
 
-  $: prefix = $stringerStore.prefix;
-  $: suffix = $stringerStore.suffix;
-  $: entries = $stringerStore.entries;
-  $: template = $stringerStore.template;
+  $: ({ prefix, suffix, template, entries } = $stringerStore);
 
   function regexEscape(str: string) {
     return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
