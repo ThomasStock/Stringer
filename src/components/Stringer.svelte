@@ -31,7 +31,6 @@ VALUES ('??name??', '??country??');`;
         return keyedEntry(key).length;
       })
     );
-    console.log(resultCount);
     for (let i = 0; i < resultCount; i++) {
       result[i] = template;
       for (const key in entries) {
@@ -40,7 +39,7 @@ VALUES ('??name??', '??country??');`;
     }
   }
   $: resultString = result.join("\n\n");
-  $: console.log(entries);
+  $: console.log(entryKeys);
 </script>
 
 <div id="stringer" class="h-screen font-mono text-sm">
@@ -57,6 +56,12 @@ VALUES ('??name??', '??country??');`;
     </div>
   </div>
   <div id="entries" class="bg-slate-200 resize-y overflow-auto h-1/3 flex gap-4 p-4">
+    {#if !entryKeys.length}
+      <div class="text-lg italic">
+        <div>No keys found!</div>
+        <div>Checked template for strings like <span class="font-semibold bg-slate-50 p-1">{prefix}name{suffix}</span></div>
+      </div>
+    {/if}
     {#each entryKeys as key}
       <div class="grow flex flex-col">
         <h3 class="font-bold">{key}</h3>
