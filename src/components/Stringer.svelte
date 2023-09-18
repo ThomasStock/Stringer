@@ -41,7 +41,7 @@
   <div class="bg-slate-300 h-1/3 flex flex-col p-4 resize-y overflow-auto">
     <div class="flex justify-between">
       <h3 class="font-bold text-lg mb-2">Template</h3>
-      <button on:click={stringerStore.set(defaultStringer)}>Reset to sample</button>
+      <button on:click={() => stringerStore.set(defaultStringer)}>Reset to sample</button>
     </div>
     <textarea id="template" class="grow p-4 resize-none" bind:value={$stringerStore.template} />
     <div class="flex gap-6 mt-4">
